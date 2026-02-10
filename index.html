@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pour Meïssa ❤️</title>
+    <style>
+        :root {
+            --primary-pink: #ff4d6d;
+            --secondary-pink: #ffccd5;
+            --dark-pink: #c9184a;
+        }
+
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #fff0f3 0%, #ffccd5 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .container {
+            padding: 2rem;
+            max-width: 90%;
+            background: transparent;
+            box-shadow: none;
+            z-index: 100;
+            transition: all 0.5s ease;
+            position: relative;
+            margin-top: 150px;
+        }
+
+        h1 {
+            color: var(--dark-pink);
+            font-size: 2.2rem;
+            margin-bottom: 2rem;
+            text-shadow: 0px 0px 10px rgba(255, 255, 255, 0.8), 2px 2px 0px rgba(255,255,255,0.5);
+            font-weight: 800;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 20px;
+            flex-direction: column;
+            align-items: center;
+            min-height: 150px;
+        }
+
+        button {
+            padding: 15px 25px;
+            font-size: 1.1rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), background-color 0.3s;
+            font-weight: bold;
+            max-width: 300px;
+            line-height: 1.2;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        #btn-oui {
+            background-color: var(--primary-pink);
+            color: white;
+            opacity: 0.9;
+            box-shadow: 0 5px 15px rgba(255, 77, 109, 0.4);
+            z-index: 150;
+        }
+
+        #btn-non {
+            background-color: #f8f9fa;
+            color: #6c757d;
+            white-space: normal;
+            position: relative;
+            z-index: 9999;
+        }
+
+        #pierre-photo {
+            position: absolute;
+            top: 5%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 350px;
+            height: 350px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 6px solid white;
+            box-shadow: 0 10px 30px rgba(201, 24, 74, 0.3);
+            z-index: 50;
+            transition: opacity 0.5s ease;
+        }
+
+        .cat-img {
+            position: absolute;
+            width: 225px;
+            z-index: 50;
+            transition: all 1s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            filter: drop-shadow(0 5px 15px rgba(0,0,0,0.1));
+        }
+
+        #cat-boy { bottom: -60px; left: -20px; transform: rotate(-10deg); }
+        #cat-girl { bottom: -60px; right: -20px; transform: rotate(10deg); }
+
+        .cats-center {
+            bottom: 45% !important;
+            width: 300px !important;
+        }
+
+        #cat-boy.cats-center {
+            left: 50% !important;
+            transform: translate(-100%, 50%) rotate(-10deg) !important;
+        }
+
+        #cat-girl.cats-center {
+            right: 50% !important;
+            transform: translate(100%, 50%) rotate(10deg) !important;
+        }
+
+        .floating-photo {
+            position: absolute;
+            max-width: 180px;
+            max-height: 180px;
+            border: 5px solid white;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            z-index: 1;
+            opacity: 0;
+            border-radius: 10px;
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        .slide-in { animation: slideIn 0.6s ease forwards; }
+        .fade-in { animation: fadeIn 0.8s ease forwards; }
+
+        @keyframes slideIn { from { transform: translateY(50px) scale(0.8); opacity: 0; } to { opacity: 1; } }
+        @keyframes fadeIn { from { opacity: 0; transform: scale(0.5); } to { opacity: 1; transform: scale(1); } }
+
+        #gallery-container {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: 200;
+            background: rgba(255, 240, 243, 0.98);
+            flex-wrap: wrap;
+            justify-content: center;
+            align-content: center;
+            padding: 20px;
+        }
+
+        .final-photo {
+            width: 300px;
+            height: 300px;
+            object-fit: cover;
+            margin: 15px;
+            border-radius: 15px;
+            border: 4px solid #ff4d6d;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            animation: popIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) backwards;
+            background-color: white;
+        }
+
+        @keyframes popIn { from { transform: scale(0); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+        .rose {
+            position: absolute;
+            font-size: 2rem;
+            animation: fall linear forwards;
+            z-index: 90;
+        }
+
+        @keyframes fall { to { transform: translateY(100vh) rotate(360deg); } }
+
+        #message-final {
+            display: none;
+            color: var(--dark-pink);
+            font-size: 3rem;
+            font-weight: bold;
+            animation: heartBeat 1.5s infinite;
+            padding: 20px;
+            z-index: 10000;
+            margin-bottom: 350px;
+        }
+
+        #bonus-message {
+            display: none;
+            position: fixed;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60%;
+            color: var(--dark-pink);
+            font-size: 1.5rem;
+            font-weight: bold;
+            z-index: 300;
+            text-align: center;
+            background: rgba(255,255,255,0.8);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(201, 24, 74, 0.2);
+            border: 2px solid var(--primary-pink);
+        }
+
+        @keyframes heartBeat {
+            0% { transform: scale(1); }
+            14% { transform: scale(1.1); }
+            28% { transform: scale(1); }
+            42% { transform: scale(1.1); }
+            70% { transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+
+<img src="before-no/boy_cat-removebg-preview.png" id="cat-boy" class="cat-img" alt="Chat Garçon">
+<img src="before-no/girl_cat-removebg-preview.png" id="cat-girl" class="cat-img" alt="Chat Fille">
+<img src="before-no/pierre.jpg" id="pierre-photo" alt="Pierre">
+
+<div class="container" id="main-card">
+    <h1 id="question">Salut toi, tu veux être ma Valentine pour samedi <br>(et pour tous les autres jours de la vie) ? 🌹</h1>
+    <div class="buttons">
+        <button id="btn-oui">OUI !</button>
+        <button id="btn-non">Non</button>
+    </div>
+</div>
+
+<div id="message-final"> OMD j'y crois pas, tu as dit oui !? <br> Je t'aime Meïssa ❤️</div>
+
+<div id="gallery-container">
+    <div id="bonus-message">Et arrête de toujours cacher ton sublime visage stp... ça sert à rien j'aurai toujours envie de croquer dedans comme dans un croissant aux amandes ❤️</div>
+</div>
+
+<script>
+    const btnNon = document.getElementById('btn-non');
+    const btnOui = document.getElementById('btn-oui');
+    const mainCard = document.getElementById('main-card');
+    const messageFinal = document.getElementById('message-final');
+    const galleryContainer = document.getElementById('gallery-container');
+    const bonusMessage = document.getElementById('bonus-message');
+    const pierrePhoto = document.getElementById('pierre-photo');
+    const catBoy = document.getElementById('cat-boy');
+    const catGirl = document.getElementById('cat-girl');
+    const question = document.getElementById('question');
+
+    let ouiScale = 1;
+    let isCooldown = false;
+
+    const duringImagesList = ['s.jpg'];
+    for(let i=0; i<=37; i++) {
+        let name = (i === 0) ? 'image.jpg' : `image (${i}).jpg`;
+        duringImagesList.push(name);
+    }
+
+    const afterImagesList = [];
+    for(let i=0; i<=14; i++) {
+        let name = (i === 0) ? 'image.jpg' : `image (${i}).jpg`;
+        afterImagesList.push(name);
+    }
+
+    let duringIndex = 0;
+
+    const phrasesOuiOriginales = [
+        "Oh mais archi !",
+        "Mais oui en fait !",
+        "C'est le plus beau jour de ma vie",
+        "C'est un rêve qui se réalise ohlala, Pierre c'est mon crush depuis le lycée",
+        "J'aimerais appuyer mais je viens de m'évanouir de bonheur",
+        "Fais moi des bb",
+        "Entrecôte bien bleue miam"
+    ];
+
+    const phrasesNonOriginales = [
+        "Jpp de lui",
+        "Cayé la",
+        "My bad mais non",
+        "Oskot Pierre !",
+        "Il croit quoi lui ? Il est vraiment trop ringard mdrr",
+        "Jpp des hommes, je la fête avec Margaux ma reuss",
+        "Je la fête avec Julien, Slayyyyy",
+        "Je préfère avoir Chkoon comme Valentin",
+        "En fait flemme",
+        "Zéro effort le mec"
+    ];
+
+    let poolOui = [...phrasesOuiOriginales];
+    let poolNon = [...phrasesNonOriginales];
+
+    const getNextPhrase = (pool, originalList) => {
+        if (pool.length === 0) pool.push(...originalList);
+        const index = Math.floor(Math.random() * pool.length);
+        const phrase = pool[index];
+        pool.splice(index, 1);
+        if(question.style.opacity !== '0') {
+            question.style.transition = 'opacity 0.5s ease';
+            question.style.opacity = '0';
+        }
+
+        return phrase;
+    };
+
+    function spawnDuringImages(count) {
+        for(let i=0; i<count; i++) {
+            if(duringIndex >= duringImagesList.length) duringIndex = 0;
+            const img = document.createElement('img');
+            img.src = `during-no/${duringImagesList[duringIndex]}`;
+            img.className = 'floating-photo';
+            const x = Math.random() * 90;
+            const y = Math.random() * 90;
+            const rot = (Math.random() * 40) - 20;
+            img.style.left = x + 'vw';
+            img.style.top = y + 'vh';
+            img.style.transform = `rotate(${rot}deg)`;
+            if(Math.random() > 0.5) img.classList.add('slide-in');
+            else img.classList.add('fade-in');
+            document.body.appendChild(img);
+            duringIndex++;
+        }
+    }
+
+    function showAfterGallery() {
+        galleryContainer.style.display = 'flex';
+        bonusMessage.style.display = 'block';
+
+        afterImagesList.forEach((filename, index) => {
+            const img = document.createElement('img');
+            img.src = `after-yes/${filename}`;
+            img.className = 'final-photo';
+            img.style.animationDelay = `${index * 0.15}s`;
+            const rot = (Math.random() * 10) - 5;
+            img.style.transform = `rotate(${rot}deg)`;
+            galleryContainer.appendChild(img);
+        });
+
+        galleryContainer.appendChild(bonusMessage);
+    }
+
+    const fuir = () => {
+        if (isCooldown) return;
+        isCooldown = true;
+
+        const zoneMax = 280;
+        const randomX = (Math.random() - 0.5) * zoneMax * 2;
+        const randomY = (Math.random() - 0.5) * zoneMax * 2;
+
+        btnNon.style.transition = "all 0.3s ease";
+        btnNon.style.transform = `translate(${randomX}px, ${randomY}px)`;
+        btnNon.innerText = getNextPhrase(poolNon, phrasesNonOriginales);
+        btnOui.innerText = getNextPhrase(poolOui, phrasesOuiOriginales);
+
+        ouiScale += 0.20;
+        btnOui.style.transform = `scale(${ouiScale})`;
+
+        spawnDuringImages(3);
+        setTimeout(() => { isCooldown = false; }, 500);
+    };
+
+    btnNon.addEventListener('mouseover', fuir);
+    btnNon.addEventListener('click', (e) => { e.preventDefault(); fuir(); });
+
+    btnOui.addEventListener('click', () => {
+        mainCard.style.opacity = '0';
+        pierrePhoto.style.opacity = '0';
+
+        document.querySelectorAll('.floating-photo').forEach(e => e.remove());
+
+        setTimeout(() => {
+            mainCard.style.display = 'none';
+            pierrePhoto.style.display = 'none';
+            catBoy.classList.add('cats-center');
+            catGirl.classList.add('cats-center');
+
+            messageFinal.style.display = 'block';
+            lancerRoses();
+        }, 300);
+
+        setTimeout(() => {
+            messageFinal.style.display = 'none';
+            catBoy.style.opacity = '0';
+            catGirl.style.opacity = '0';
+            document.querySelectorAll('.rose').forEach(e => e.remove());
+
+            showAfterGallery();
+        }, 6000);
+    });
+
+    function lancerRoses() {
+        const emojis = ['🌹', '❤️', '🌸', '💖', '🥩'];
+        for (let i = 0; i < 250; i++) {
+            setTimeout(() => {
+                const rose = document.createElement('div');
+                rose.className = 'rose';
+                rose.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+                rose.style.left = Math.random() * 100 + 'vw';
+                rose.style.top = '-50px';
+                rose.style.fontSize = (Math.random() * 20 + 20) + 'px';
+                rose.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                document.body.appendChild(rose);
+                setTimeout(() => rose.remove(), 5900);
+            }, i * 30);
+        }
+    }
+</script>
+</body>
+</html>
